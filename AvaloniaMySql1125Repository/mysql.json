@@ -1,0 +1,6 @@
+{
+  "server": "192.168.200.13",
+  "database": "1125_2026_towns",
+  "login" : "student",
+  "password" : "student"
+}
