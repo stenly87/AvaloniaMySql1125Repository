@@ -43,6 +43,7 @@ public class TownRepository: MySqlRepository<Town>, IDisposable
                 var town = new Town();
                 town.Id = reader.GetInt32("Id");
                 town.Title = reader.GetString("Title");
+                town.CountryId =  reader.GetInt32("IdCountry");
                 town.Country = new Country();
                 town.Country.Id = reader.GetInt32("IdCountry");
                 town.Country.Title = reader.GetString("country");
@@ -67,6 +68,10 @@ public class TownRepository: MySqlRepository<Town>, IDisposable
 
     public override bool Insert(Town entity)
     {
+        if (string.IsNullOrEmpty(entity.Title) ||
+            entity.CountryId <= 0)
+            throw new Exception("Validate town fails");
+        
         string sql = "insert into `Towns` (`Id`, `Title`, `IdCountry`) values (0, @Title, @IdCountry)";
         var parameters = new MySqlParameter[ ]
         {
